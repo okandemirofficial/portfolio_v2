@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_v2/const/theme.dart';
+import 'package:portfolio_v2/widgets/about.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
@@ -11,10 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: darkTheme,
       builder: (context, widget) => ResponsiveBreakpoints.builder(
         child: widget!,
         breakpoints: [
@@ -25,6 +24,36 @@ class MyApp extends StatelessWidget {
         ],
       ),
       initialRoute: '/',
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: ListView(
+        padding: const EdgeInsets.all(32.0),
+        children: const [
+          ResponsiveRowColumn(
+            layout: ResponsiveRowColumnType.ROW,
+            children: [
+              ResponsiveRowColumnItem(
+                rowFlex: 2,
+                child: AboutWidget(),
+              ),
+              ResponsiveRowColumnItem(
+                rowFlex: 5,
+                child: AboutWidget(),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
