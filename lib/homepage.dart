@@ -87,5 +87,3 @@ class DesktopPage extends StatelessWidget {
     );
   }
 }
-
-class CustomScrollBehavior extends MaterialScrollBehavior {}
