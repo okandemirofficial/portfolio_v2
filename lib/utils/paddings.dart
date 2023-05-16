@@ -164,6 +164,12 @@ class PaddingAll extends Padding {
     required Widget super.child,
     super.padding = const EdgeInsets.all(ProjectPaddings.large),
   });
+
+  const PaddingAll.xl({
+    super.key,
+    required Widget super.child,
+    super.padding = const EdgeInsets.all(ProjectPaddings.xlarge),
+  });
 }
 
 ///It gives spaces every child of list

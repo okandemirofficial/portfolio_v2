@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:portfolio_v2/const/const.dart';
+import 'package:portfolio_v2/const/project_paddings.dart';
+import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/utils/paddings.dart';
 
 class AboutWidget extends StatelessWidget {
@@ -14,7 +14,8 @@ class AboutWidget extends StatelessWidget {
       color: Colors.transparent,
       elevation: 0,
       shape: Const.defaultShape,
-      child: PaddingAll.l(
+      child: Padding(
+        padding: EdgeInsets.all(context.isMobile ? ProjectPaddings.xlarge : ProjectPaddings.medium),
         child: Column(
           children: [
             Row(
@@ -22,19 +23,31 @@ class AboutWidget extends StatelessWidget {
               children: [
                 Text(
                   'Okan',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: context.isMobile
+                      ? Theme.of(context).textTheme.headlineMedium
+                      : Theme.of(context).textTheme.headlineLarge,
                 ),
-                Text(
-                  'Mobile Application Developer',
-                  style: Theme.of(context).textTheme.titleMedium,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Mobile Application',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      'Developer',
+                      style: Theme.of(context).textTheme.titleMedium,
+                      textAlign: TextAlign.end,
+                    ),
+                  ],
                 ),
               ],
             ),
             ClipOval(
               child: Image.asset(
                 'images/pp.jpg',
-                height: 350,
-                width: 350,
+                height: context.isMobile ? 200 : 200,
+                width: context.isMobile ? 200 : 200,
               ),
             ),
             const SizedBox(
@@ -113,7 +126,7 @@ class AboutWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 64.0),
+            const Spacer(),
             SizedBox(
               width: 300,
               child: ElevatedButton(
@@ -140,7 +153,8 @@ class AboutWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            const SizedBox(height: 32)
           ],
         ),
       ),
