@@ -12,15 +12,18 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(
-      builder: (p0, p1, p2) => MaterialApp(
+    return ResponsiveSizer(builder: (p0, p1, p2) {
+      debugPrint('sp: ${1.sp}');
+      debugPrint('dp: ${1.dp}');
+
+      return MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
-        title: 'Flutter Demo',
+        title: 'Okan Demir',
         theme: darkTheme,
         initialRoute: '/',
         home: const HomePage(),
-      ),
-    );
+      );
+    });
   }
 }
 

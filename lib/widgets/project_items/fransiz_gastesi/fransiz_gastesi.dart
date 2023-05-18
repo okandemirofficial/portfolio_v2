@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
+import 'package:portfolio_v2/widgets/common/conditional_expanded.dart';
+import 'package:portfolio_v2/widgets/common/row_to_colum.dart';
 import 'package:portfolio_v2/widgets/common/store_badge.dart';
 import 'package:portfolio_v2/widgets/project_items/fransiz_gastesi/app_preview/homepage.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FransizGastesi extends StatelessWidget {
   const FransizGastesi({super.key, required this.scrollController});
@@ -10,10 +14,11 @@ class FransizGastesi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //return Text('anan');
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return RowToColumn(
+      rowCrossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
+        ConditionalExpanded(
+          expandedOnMobile: false,
           flex: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,33 +36,36 @@ class FransizGastesi extends StatelessWidget {
               const Text('• Riverpod State Management. Isar storage'),
               const Text('• Firebase Notifications & Analytics'),
               const SizedBox(height: 16),
-              const Row(
+              Row(
                 children: [
                   SizedBox(
-                    height: 60,
-                    child: StoreBadge(
+                    height: context.isMobile ? 12.w : 19.sp,
+                    child: const StoreBadge(
                         isIos: false,
                         link:
-                            'https://play.google.com/store/apps/details?id=com.applantis.serve24pro'),
+                            'https://play.google.com/store/apps/details?id=com.FransizGastesi.Gasteniz'),
                   ),
-                  SizedBox(width: 32),
+                  const SizedBox(width: 16),
                   SizedBox(
-                    height: 60,
-                    child:
-                        StoreBadge(isIos: true, link: 'https://apps.apple.com/tr/app/id1661857071'),
+                    height: context.isMobile ? 12.w : 19.sp,
+                    child: const StoreBadge(
+                        isIos: true,
+                        link: 'https://apps.apple.com/tr/app/frans%C4%B1z-gastesi/id1641149389'),
                   ),
                 ],
               ),
             ],
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: 16,
+          height: context.isMobile ? 32 : 0,
         ),
-        Expanded(
+        ConditionalExpanded(
+          expandedOnMobile: false,
           flex: 2,
           child: SizedBox(
-            height: 600,
+            height: 550,
             child: FransizGastesiHomepage(scrollController),
           ),
         ),

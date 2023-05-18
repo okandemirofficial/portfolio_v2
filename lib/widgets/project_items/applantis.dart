@@ -1,8 +1,10 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/utils/paddings.dart';
 import 'package:portfolio_v2/utils/project_image_providers.dart';
 import 'package:portfolio_v2/widgets/common/store_badge.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Applantis extends StatelessWidget {
   const Applantis({super.key, required this.scrollController});
@@ -60,18 +62,19 @@ class Applantis extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        const Row(
+        Row(
           children: [
             SizedBox(
-              height: 60,
-              child: StoreBadge(
+              height: context.isMobile ? 12.w : 19.sp,
+              child: const StoreBadge(
                   isIos: false,
                   link: 'https://play.google.com/store/apps/details?id=com.applantis.serve24pro'),
             ),
-            SizedBox(width: 32),
+            const SizedBox(width: 16),
             SizedBox(
-              height: 60,
-              child: StoreBadge(isIos: true, link: 'https://apps.apple.com/tr/app/id1661857071'),
+              height: context.isMobile ? 12.w : 19.sp,
+              child:
+                  const StoreBadge(isIos: true, link: 'https://apps.apple.com/tr/app/id1661857071'),
             ),
           ],
         ),

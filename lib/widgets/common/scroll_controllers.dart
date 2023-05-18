@@ -1,32 +1,30 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ManuelScrollingController {
-  static final _desktopBreakPoints = <double>[
-    500,
-    1200,
-    1900,
-  ];
-  static final _mobileBreakPoints = <double>[
-    700,
-    1400,
-    2100,
-  ];
-
+  static final horizontalControllers = [ScrollController(), ScrollController(), ScrollController()];
   static final mainController = ScrollController();
 
-  static final horizontalControllers = [ScrollController(), ScrollController(), ScrollController()];
+  static const int _animationDuration = 250;
+  static final _desktopBreakPoints = <double>[
+    80 / 1.sp,
+    192 / 1.sp,
+    304 / 1.sp,
+  ];
 
+  static const double _horizontalScrollOffset = 50;
   static int _index = 0;
-
   static double _mainScroll = 0;
   static const double _mainScrollOffset = 10;
-  static const double _horizontalScrollOffset = 50;
-
-  static const int _animationDuration = 250;
+  static final _mobileBreakPoints = <double>[
+    70 / 1.sp,
+    120 / 1.sp,
+    180 / 1.sp,
+  ];
 
   ///https://github.com/mayurnile/web_smooth_scroll/blob/main/lib/src/source.dart
-  static void onPointerSignal(PointerSignalEvent event) async {
+  static void onPointerSignal(PointerSignalEvent event) {
     if (event is PointerScrollEvent) {
       //First calculate target scroll of main scroll controller
       final double mainTarget =
@@ -59,18 +57,16 @@ class ManuelScrollingController {
           horizontalControllers[index].offset, _horizontalScrollOffset);
 
       // 3- Animate horizontalTarget
-      await _animateTargetController(horizontalControllers[index], horizontalTarget);
+      _animateTargetController(horizontalControllers[index], horizontalTarget);
 
       // 4- Check horizontalController and increaseIndex if it's exceed edges
-      if (horizontalControllers[index].offset >=
-          horizontalControllers[index].position.maxScrollExtent) {
+      if (horizontalTarget >= horizontalControllers[index].position.maxScrollExtent) {
         _index = _index + 1;
         return;
       }
-      debugPrint('offset: ${horizontalControllers[_index].offset}');
-      debugPrint('minScrollExtent: ${horizontalControllers[_index].position.minScrollExtent}');
-      if (horizontalControllers[index].offset <=
-          horizontalControllers[index].position.minScrollExtent) {
+      // debugPrint('offset: ${horizontalControllers[_index].offset}');
+      // debugPrint('minScrollExtent: ${horizontalControllers[_index].position.minScrollExtent}');
+      if (horizontalTarget <= horizontalControllers[index].position.minScrollExtent) {
         _index = _index - 1;
         return;
       }

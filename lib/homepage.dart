@@ -33,14 +33,22 @@ class MobilePage extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         slivers: const [
           SliverToBoxAdapter(
+            child: AboutWidget(),
+          ),
+          SliverToBoxAdapter(
             child: IntroductionWidget(),
           ),
           SliverToBoxAdapter(
-            child: SizedBox(height: 64),
+            child: SizedBox(height: 16),
           ),
           SliverToBoxAdapter(
             child: ProjectListWidget(),
           ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 500,
+            ),
+          )
         ],
       ),
     );
@@ -78,6 +86,11 @@ class DesktopPage extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: ProjectListWidget(),
                   ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 500,
+                    ),
+                  )
                 ],
               ),
             ),
