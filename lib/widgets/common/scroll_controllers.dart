@@ -32,6 +32,7 @@ class ManuelScrollingController {
   static void onPointerSignal(PointerSignalEvent event) {
     if (event is PointerScrollEvent) {
       ///Touchpad detector. Behaviour like mobile
+      debugPrint('event.scrollDelta.dy: ${event.scrollDelta.dy}');
       if (event.scrollDelta.dy < 150 || event.scrollDelta.dy > -150) {
         _handleVerticalDragUpdate(event.scrollDelta.dy, false);
         return;
