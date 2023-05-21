@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.microtask(() => ManuelScrollingController.initBreakpoints());
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SelectionArea(
@@ -63,11 +64,7 @@ class DesktopPage extends StatelessWidget {
     return PaddingAll.l(
       child: Row(
         children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).height * 0.5,
-            height: MediaQuery.sizeOf(context).height * 0.8,
-            child: const AboutWidget(),
-          ),
+          const Expanded(flex: 2, child: AboutWidget()),
           Expanded(
             flex: 5,
             child: Listener(

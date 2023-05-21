@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/utils/paddings.dart';
 import 'package:portfolio_v2/utils/project_image_providers.dart';
+import 'package:portfolio_v2/widgets/common/scroll_controllers.dart';
 import 'package:portfolio_v2/widgets/common/store_badge.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -14,6 +15,7 @@ class Diziyleogren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: context.isMobile ? null : ManuelScrollingController.globalKeys[2],
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 16),
@@ -32,6 +34,7 @@ class Diziyleogren extends StatelessWidget {
           height: 400,
           width: 700,
           child: ListView(
+            key: context.isMobile ? ManuelScrollingController.globalKeys[2] : null,
             scrollDirection: Axis.horizontal,
             controller: scrollController,
             children: [

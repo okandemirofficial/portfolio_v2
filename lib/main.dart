@@ -1,10 +1,17 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_v2/const/theme.dart';
 import 'package:portfolio_v2/homepage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+
+  debugPrint(webBrowserInfo.product.toString());
+
   runApp(const MyApp());
 }
 

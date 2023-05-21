@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/widgets/common/conditional_expanded.dart';
 import 'package:portfolio_v2/widgets/common/row_to_colum.dart';
+import 'package:portfolio_v2/widgets/common/scroll_controllers.dart';
 import 'package:portfolio_v2/widgets/common/store_badge.dart';
 import 'package:portfolio_v2/widgets/project_items/fransiz_gastesi/app_preview/homepage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -15,6 +16,7 @@ class FransizGastesi extends StatelessWidget {
   Widget build(BuildContext context) {
     //return Text('anan');
     return RowToColumn(
+      key: context.isMobile ? null : ManuelScrollingController.globalKeys[1],
       rowCrossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ConditionalExpanded(

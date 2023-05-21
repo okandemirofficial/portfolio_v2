@@ -3,29 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ManuelScrollingController {
+  static final globalKeys = [GlobalKey(), GlobalKey(), GlobalKey()];
   static final horizontalControllers = [ScrollController(), ScrollController(), ScrollController()];
   static final mainController = ScrollController();
 
-  static const int _animationDuration = 250;
-  static final _desktopBreakPoints = <double>[
-    80 / 1.sp,
-    192 / 1.sp,
-    304 / 1.sp,
-  ];
+  static const int _animationDuration = 400;
 
-  static const double _horizontalScrollOffset = 50;
+  static List<double> breakPoints = [500, 1000, 1500];
+
+  static const double _horizontalScrollOffset = 60;
   static int _index = 0;
   static double _mainScroll = 0;
   static const double _mainScrollOffset = 10;
-  static final _mobileBreakPoints = <double>[
-    70 / 1.sp,
-    120 / 1.sp,
-    180 / 1.sp,
-  ];
+
+  static void initBreakpoints() {
+    final newBreakpoints = <double>[];
+    for (var key in globalKeys) {
+      RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
+      Offset position = box.localToGlobal(Offset.zero);
+      debugPrint(position.dy.toString());
+      debugPrint('increased: ${position.dy}');
+      newBreakpoints.add(position.dy - (Device.screenType == ScreenType.mobile ? 10.h : 0));
+    }
+    breakPoints = newBreakpoints;
+  }
 
   ///https://github.com/mayurnile/web_smooth_scroll/blob/main/lib/src/source.dart
   static void onPointerSignal(PointerSignalEvent event) {
     if (event is PointerScrollEvent) {
+      ///Touchpad detector. Behaviour like mobile
+      if (event.scrollDelta.dy < 150 || event.scrollDelta.dy > -150) {
+        _handleVerticalDragUpdate(event.scrollDelta.dy, false);
+        return;
+      }
+
       //First calculate target scroll of main scroll controller
       final double mainTarget =
           _calculateTargetScroll(event, mainController, _mainScroll, _mainScrollOffset);
@@ -33,14 +44,14 @@ class ManuelScrollingController {
       final index = _index;
 
       ///If _index passed list count: let it go
-      if (index >= _desktopBreakPoints.length) {
+      if (index >= breakPoints.length) {
         _animateTargetController(mainController, mainTarget);
         _mainScroll = mainTarget;
         return;
       }
 
       //If target smaller than current breakPoint. animate and return
-      if (mainTarget <= _desktopBreakPoints[index]) {
+      if (mainTarget <= breakPoints[index]) {
         _animateTargetController(mainController, mainTarget);
         _mainScroll = mainTarget;
         return;
@@ -49,8 +60,8 @@ class ManuelScrollingController {
       //If main target scrool exceeds currentBreakPoint:
 
       // 1- Animate mainScroll until breakpoint
-      _animateTargetController(mainController, _desktopBreakPoints[index]);
-      _mainScroll = _desktopBreakPoints[index];
+      _animateTargetController(mainController, breakPoints[index]);
+      _mainScroll = breakPoints[index];
 
       // 2- Check current vertical controller status and animate.
       final double horizontalTarget = _calculateTargetScroll(event, horizontalControllers[index],
@@ -75,37 +86,41 @@ class ManuelScrollingController {
 
   ///It's mobile version of [onPointerSignal]
   static void onVerticalDragUpdate(DragUpdateDetails details) async {
-    debugPrint(details.delta.dy.toString());
+    _handleVerticalDragUpdate(details.delta.dy, true);
+  }
 
+  ///Common method for both mobile and trackpads
+  static _handleVerticalDragUpdate(double delta, bool isMobile) {
     //First calculate target scroll of main scroll controller
     final double mainTarget =
-        _calculateTargetMove(details, mainController, _mainScroll, _mainScrollOffset);
+        _calculateTargetMove(delta, mainController, _mainScroll, _mainScrollOffset, isMobile);
 
     final index = _index;
 
     ///If _index passed list count: let it go
-    if (index >= _mobileBreakPoints.length) {
+    if (index >= breakPoints.length) {
       _jumpTargetController(mainController, mainTarget);
       _mainScroll = mainTarget;
       return;
     }
 
     //If target smaller than current breakPoint. animate and return
-    if (mainTarget <= _mobileBreakPoints[index]) {
+    if (mainTarget <= breakPoints[index]) {
       _jumpTargetController(mainController, mainTarget);
       _mainScroll = mainTarget;
       return;
     }
 
     //If main target scrool exceeds currentBreakPoint:
-
+    ///This step is useless on mobile & trackpad
     // 1- Animate mainScroll until breakpoint
-    _jumpTargetController(mainController, _mobileBreakPoints[index]);
-    _mainScroll = _mobileBreakPoints[index];
+    // _jumpTargetController(
+    //     mainController, (isMobile ? _mobileBreakPoints[index] : _desktopBreakPoints[index]));
+    // _mainScroll = _mobileBreakPoints[index];
 
     // 2- Check current vertical controller status and animate.
-    final double horizontalTarget = _calculateTargetMove(details, horizontalControllers[index],
-        horizontalControllers[index].offset, _horizontalScrollOffset);
+    final double horizontalTarget = _calculateTargetMove(delta, horizontalControllers[index],
+        horizontalControllers[index].offset, _horizontalScrollOffset, isMobile);
 
     // 3- Animate horizontalTarget
     _jumpTargetController(horizontalControllers[index], horizontalTarget);
@@ -152,9 +167,13 @@ class ManuelScrollingController {
   }
 
   ///Its mobile version of [_calculateTargetScroll]
-  static double _calculateTargetMove(DragUpdateDetails details, ScrollController controller,
-      double targetScroll, double scrollOfset) {
-    targetScroll += (details.delta.dy * -1.2);
+  static double _calculateTargetMove(double delta, ScrollController controller, double targetScroll,
+      double scrollOfset, bool isMobile) {
+    if (isMobile) {
+      targetScroll += (delta * -1.2);
+    } else {
+      targetScroll += (delta * 1.2);
+    }
 
     // Checking if scroll has reached to bottom of the screen
     if (targetScroll > controller.position.maxScrollExtent) {

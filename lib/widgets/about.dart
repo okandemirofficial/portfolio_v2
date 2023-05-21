@@ -4,6 +4,7 @@ import 'package:portfolio_v2/const/const.dart';
 import 'package:portfolio_v2/const/project_paddings.dart';
 import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/utils/paddings.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutWidget extends StatelessWidget {
@@ -12,7 +13,7 @@ class AboutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.isMobile ? 700 : null,
+      height: context.isMobile ? 600 : null,
       child: Card(
         color: Colors.transparent,
         elevation: 0,
@@ -46,14 +47,14 @@ class AboutWidget extends StatelessWidget {
               ),
               Text(
                 'me@okandemir.net',
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               Text(
                 'Istanbul / Turkey',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(
-                height: 48,
+              SizedBox(
+                height: 2.h,
               ),
               RowWithSpacing.m(
                 mainAxisSize: MainAxisSize.max,
@@ -157,7 +158,9 @@ class AboutWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 32)
+              ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 0, maxHeight: 32),
+              )
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:portfolio_v2/const/project_paddings.dart';
 import 'package:portfolio_v2/const/theme.dart';
 import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/widgets/common/apply_desktop_space.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class IntroductionWidget extends StatelessWidget {
   const IntroductionWidget({super.key});
@@ -26,8 +27,8 @@ class _IntroductionColumn extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!context.isMobile)
-            const SizedBox(
-              height: 128,
+            SizedBox(
+              height: 5.h,
             ),
           RichText(
             text: TextSpan(

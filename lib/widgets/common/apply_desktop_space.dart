@@ -11,28 +11,12 @@ class ApplyDesktopSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        //  final width = constraints.biggest.width;
-        return Row(
-          children: [
-            if (!context.isMobile)
-              const Expanded(
-                flex: 2,
-                child: SizedBox.shrink(),
-              ),
-            Expanded(
-              flex: 6,
-              child: child,
-            ),
-            if (!context.isMobile)
-              const Expanded(
-                flex: 2,
-                child: SizedBox.shrink(),
-              ),
-          ],
-        );
-      },
+    return Row(
+      children: [
+        if (!context.isMobile) const Spacer(),
+        if (context.isMobile) Expanded(child: child) else SizedBox(width: 750, child: child),
+        if (!context.isMobile) const Spacer()
+      ],
     );
   }
 }

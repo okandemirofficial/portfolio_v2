@@ -1,4 +1,4 @@
-name: Okan Demir
+name: portfolio_v2
 description: My Portfolio
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -21,6 +21,7 @@ dependencies:
   google_fonts: ^4.0.4
   easy_image_viewer: ^1.2.0
   url_launcher: ^6.1.11
+  device_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:

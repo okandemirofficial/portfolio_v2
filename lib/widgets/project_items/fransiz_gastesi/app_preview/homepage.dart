@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_v2/extension/responsive_sizer_extension.dart';
 import 'package:portfolio_v2/utils/paddings.dart';
+import 'package:portfolio_v2/widgets/common/scroll_controllers.dart';
 import 'package:portfolio_v2/widgets/project_items/fransiz_gastesi/app_preview/parallax_list_item.dart';
 import 'package:portfolio_v2/widgets/project_items/fransiz_gastesi/app_preview/post_model.dart';
 import 'package:portfolio_v2/widgets/project_items/fransiz_gastesi/app_preview/theme.dart';
@@ -74,6 +75,7 @@ class FransizGastesiHomepage extends StatelessWidget {
           ),
           body: Builder(builder: (newContext) {
             return ListView(
+              key: context.isMobile ? ManuelScrollingController.globalKeys[1] : null,
               controller: scrollController,
               physics: context.isMobile ? const NeverScrollableScrollPhysics() : null,
               children: [
