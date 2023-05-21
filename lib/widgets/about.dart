@@ -12,8 +12,8 @@ class AboutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.isMobile ? 600 : null,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: context.isMobile ? 600 : 700),
       child: Card(
         color: Colors.transparent,
         elevation: 0,

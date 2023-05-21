@@ -1,4 +1,3 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_v2/const/theme.dart';
@@ -6,12 +5,6 @@ import 'package:portfolio_v2/homepage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-
-  debugPrint(webBrowserInfo.product.toString());
-
   runApp(const MyApp());
 }
 
@@ -20,9 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (p0, p1, p2) {
-      debugPrint('sp: ${1.sp}');
-      debugPrint('dp: ${1.dp}');
-
       return MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
         title: 'Okan Demir',

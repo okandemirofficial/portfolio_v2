@@ -21,8 +21,8 @@ class ManuelScrollingController {
     for (var key in globalKeys) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
       Offset position = box.localToGlobal(Offset.zero);
-      debugPrint(position.dy.toString());
-      debugPrint('increased: ${position.dy}');
+      // debugPrint(position.dy.toString());
+      // debugPrint('increased: ${position.dy}');
       newBreakpoints.add(position.dy - (Device.screenType == ScreenType.mobile ? 10.h : 0));
     }
     breakPoints = newBreakpoints;
@@ -32,8 +32,8 @@ class ManuelScrollingController {
   static void onPointerSignal(PointerSignalEvent event) {
     if (event is PointerScrollEvent) {
       ///Touchpad detector. Behaviour like mobile
-      debugPrint('event.scrollDelta.dy: ${event.scrollDelta.dy}');
-      if (event.scrollDelta.dy < 150 || event.scrollDelta.dy > -150) {
+      // debugPrint('event.scrollDelta.dy: ${event.scrollDelta.dy}');
+      if ((event.scrollDelta.dy < 100 && event.scrollDelta.dy > -100)) {
         _handleVerticalDragUpdate(event.scrollDelta.dy, false);
         return;
       }

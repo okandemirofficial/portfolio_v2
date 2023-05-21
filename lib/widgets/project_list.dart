@@ -21,7 +21,7 @@ class ProjectListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: context.isMobile ? 370.h : 300.h,
+              height: context.isMobile ? 370.h : 2100,
               child: VerticalDivider(
                 thickness: 0.5,
                 indent: 24,

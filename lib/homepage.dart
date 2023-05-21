@@ -63,6 +63,7 @@ class DesktopPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PaddingAll.l(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Expanded(flex: 2, child: AboutWidget()),
           Expanded(
