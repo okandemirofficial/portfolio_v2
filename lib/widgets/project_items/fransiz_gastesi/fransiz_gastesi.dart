@@ -14,7 +14,6 @@ class FransizGastesi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Text('anan');
     return RowToColumn(
       key: context.isMobile ? null : ManuelScrollingController.globalKeys[1],
       rowCrossAxisAlignment: CrossAxisAlignment.start,
